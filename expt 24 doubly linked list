@@ -1,0 +1,92 @@
+#include<iostream>
+using namespace std;
+
+class doublylinkedlist{
+
+  public:
+    int data;
+    doublylinkedlist* prev;
+    doublylinkedlist* next;
+    //constructor
+    doublylinkedlist(int d){
+    this->data = d;
+    this->prev =NULL;
+    this->next = NULL;
+    }
+
+    ~doublylinkedlist(){
+       int value = this->data;
+       if(this->next != NULL){
+        delete next;
+        this->next = NULL;
+       }
+    }
+};
+
+void print(doublylinkedlist* head){
+     doublylinkedlist* temp =head;
+     while(temp!= NULL){
+        cout<<temp->data<<endl;
+        temp = temp->next;
+     }
+}
+
+void insertathead(doublylinkedlist* &head, int d){
+     doublylinkedlist* temp = new doublylinkedlist(d);
+       temp->next = head;
+       head->prev=temp;
+       head = temp;
+}
+
+void insertattail(doublylinkedlist* &tail, int d){
+doublylinkedlist* temp = new doublylinkedlist(d);
+tail->next = temp;
+temp->prev= tail;
+tail= temp;
+}
+
+void deletedoublylinkedlist(int position, doublylinkedlist* &head){
+
+if(position==1){
+    doublylinkedlist* temp = head;
+    temp->next->prev = NULL;
+    head = temp->next;
+    temp->next = NULL;
+
+    delete temp;
+}
+else{
+            doublylinkedlist* curr = head;
+            doublylinkedlist* prev = NULL;
+       int cnt =1;
+       while(cnt< position){
+         prev = curr;
+         curr= curr->next;
+         cnt++;
+       }
+       curr->prev= NULL;
+       prev->next=curr->next;
+       curr->next =NULL;
+       delete curr;
+}
+}
+
+int main(){
+  doublylinkedlist*node1= new doublylinkedlist(4);
+  doublylinkedlist* head = node1;
+  doublylinkedlist* tail = node1;
+ // print(head);
+
+  insertathead(head,5);
+ // print(head);
+  insertattail(tail,6);
+// print(head);
+  insertattail(tail,9);
+// print(head);
+ insertattail(tail,7);
+ print(head);
+
+
+
+return 0;
+}
